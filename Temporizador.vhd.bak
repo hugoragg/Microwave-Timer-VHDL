@@ -1,0 +1,104 @@
+Library ieee; 
+Use ieee.std_logic_1164.all; 
+use ieee.numeric_std.all;
+
+Entity Temporizador is 
+
+	Port( 
+		en_cnt: in std_logic;
+		clk: in std_logic;
+		reset_n: in std_logic;
+		Carga_seg: in std_logic;
+		carga_min: in std_logic;
+		ent_p: in std_logic_vector (6 downto 0);
+		SegmentsA, SegmentsB, SegmentsC, SegmentsD: out std_logic_vector(6 downto 0)
+		);
+End Temporizador; 
+
+Architecture behavioral of Temporizador is  
+		 signal c1 : std_logic;
+		 signal c2 : std_logic;
+		 signal c3 : std_logic;
+		 signal c4 : std_logic;
+		 signal cnt_seg : std_logic_vector(6 downto 0);
+		 signal cnt_min : std_logic_vector(6 downto 0);
+
+	
+	Begin  
+	i1: entity work.Cont50M
+		port map(
+		en_cnt=>en_cnt,
+		clk=>clk,
+		reset_n=>reset_n,
+		co=>c1
+		);
+	
+	i2: entity work.UnidadSeg
+		port map(
+		en=>c1,
+		clk=>clk,
+		reset_n=>reset_n,
+		ent_p=>ent_p,
+		Carga_seg=>Carga_seg,
+		cnt_segu=>cnt_seg(3 downto 0),
+		co=>c2
+		);
+		
+		i3: entity work.DecenaSeg
+		port map(
+		en=>c2,
+		clk=>clk,
+		reset_n=>reset_n,
+		ent_p=>ent_p,
+		Carga_seg=>Carga_seg,
+		cnt_segd=>cnt_seg(6 downto 4),
+		co=>c3
+		);
+		
+		i4: entity work.UnidadMin
+		port map(
+		en=>c3,
+		clk=>clk,
+		reset_n=>reset_n,
+		ent_p=>ent_p,
+		Carga_min=>Carga_min,
+		cnt_minu=>cnt_min(3 downto 0),
+		co=>c4
+		);
+		
+		i5: entity work.DecenaMin
+		port map(
+		en=>c4,
+		clk=>clk,
+		reset_n=>reset_n,
+		ent_p=>ent_p,
+		Carga_min=>Carga_min,
+		cnt_mind=>cnt_min(6 downto 4)
+		);
+		
+		Display1: entity work.BinA7seg
+		port map (
+		entrada=>'0' & cnt_min(6 downto 4),
+		salida=>SegmentsA
+		);
+		
+		
+		Display2: entity work.BinA7seg
+		port map (
+		entrada=>cnt_min(3 downto 0),
+		salida=>SegmentsB
+		);
+		
+		Display3: entity work.BinA7seg
+		port map (
+		entrada=>'0' & cnt_seg(6 downto 4),
+		salida=>SegmentsC
+		);
+		
+		Display4: entity work.BinA7seg
+		port map (
+		entrada=>cnt_seg(3 downto 0),
+		salida=>SegmentsD
+		);
+		
+	End behavioral; 

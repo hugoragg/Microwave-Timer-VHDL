@@ -1,0 +1,53 @@
+Library ieee; 
+Use ieee.std_logic_1164.all; 
+use ieee.numeric_std.all;
+
+Entity UnidadControl is 
+
+	Port( 
+		boton: in std_logic;
+		puerta: in std_logic;
+		clk: in std_logic;
+		reset_n: in std_logic;
+		en_cnt: in std_logic;
+		Carga_seg: in std_logic;
+		carga_min: in std_logic;
+		fin_cuenta: out std_logic;
+		fin: out std_logic;
+		horno_on: out std_logic;
+		abierta: out std_logic
+		);
+End UnidadControl; 
+
+Architecture behavioral of UnidadControl is  
+begin 
+	process(clk,puerta,reset_n)
+	begin
+			if boton='1' then
+				carga_min<='1';
+				if boton='1' then
+					carga_seg<='1';
+					if puerta='0';
+						horno_on=>'1';
+						abierta=>'0';
+					else;
+						horno_on=>'0';
+						abierta=>'1';
+					end if;
+
+				else
+				
+				end if;
+			end if;
+
+
+	
+	
+	
+	
+	
+	
+	end process;
+
+
+End behavioral; 

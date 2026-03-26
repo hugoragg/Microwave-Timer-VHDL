@@ -1,0 +1,31 @@
+Library ieee; 
+
+Use ieee.std_logic_1164.all; 
+
+Entity Cont50M is 
+
+	Port( 
+		en_cnt: in std_logic;
+		clk: in std_logic;
+		reset_n: in std_logic;
+		co: out std_logic
+		);
+
+End Cont50M; 
+
+Architecture behavioral of Cont50M is  
+signal contador: unsigned;
+	Begin  
+	process (clk, en_cont,reset_n)
+		
+		if reset_n = '0' then
+			contador <= (others => '0');
+		elsif en_cont= '0' then 
+			contador <= (others => '0');
+		elsif clk ’event and clk = '1' then
+			contador <= '1';
+		end if;
+	end process;
+	
+	co<=std_logic(co);
+End behavioral; 

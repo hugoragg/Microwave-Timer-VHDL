@@ -1,0 +1,26 @@
+Library ieee; 
+Use ieee.std_logic_1164.all; 
+use ieee.numeric_std.all;
+
+Entity DataPath is 
+
+	Port( 
+		en_cnt: in std_logic;
+		clk: in std_logic;
+		Carga_seg: in std_logic;
+		carga_min: in std_logic;
+		reset_n: in std_logic_vector (6 downto 0);
+		cnt_mind: out std_logic_vector (3 downto 0);
+		co: out std_logic
+		);
+End DataPath; 
+
+Architecture behavioral of DataPath is  
+    signal contador : unsigned(2 downto 0) := (others => '0');
+	 
+	Begin  
+	i1/??????0????0000.0000?????
+	
+	
+	
+	End behavioral; 
